@@ -2,7 +2,7 @@
 function getNewClients() {
 
   // now start by doing an API call to the clients API to get all client profiles and store that data in a global array
-  var newClientResponse = UrlFetchApp.fetch('https://intakeq.com/api/v1/clients?dateCreatedStart=' + today + '&includeProfile=true', {
+  var newClientResponse = UrlFetchApp.fetch('https://intakeq.com/api/v1/clients?dateCreatedStart=' + pastWeek + '&includeProfile=true', {
     headers: {
       'X-Auth-Key':'5d04e8f9a06889a86754210b04caabe586b139e8'
     }
