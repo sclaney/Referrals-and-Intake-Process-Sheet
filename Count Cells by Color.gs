@@ -17,9 +17,9 @@ function countColoredCells(countRange,colorRef,unUsed) {
         return countCells;
 };
 
-// Writes a random number to AC1
-function onEdit(e) {
-  SpreadsheetApp.getActiveSheet().getRange('AC1').setValue(Math.random());
-}
+// Writes a random number to AC1. Uncomment to get this code working again
+// function onEdit(e) {
+//   SpreadsheetApp.getActiveSheet().getRange('AC1').setValue(Math.random());
+// }
 
 
