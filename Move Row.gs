@@ -8,17 +8,17 @@ function atEdit(event) {
   // var target = targetSheet.getRange(targetSheet.getLastRow() + 1, 1);
   var clientId = s.getRange(row, 3).getValue();
 
-  // Update the client's status on their intakeq profile if it's edited on the sheet
-  if (r.getColumn() == 1) {
+  // update the client's status on their intakeq profile if it's edited on the sheet
+  if (r.getColumn() == 1 && r.getValue() == "Brand New" ||
+      r.getColumn() == 1 && r.getValue() == "Scheduling Consultation Call" || 
+      r.getColumn() == 1 && r.getValue() == "Onboarding" || 
+      r.getColumn() == 1 && r.getValue() == "Follow-Up"
+     ) {
     updateStatusOnEdit(clientId, value);
-  }
+    autoSortRows(s);
 
-  // Make a get request to get client info needed for post request, then make post request to update client status
-  if (r.getColumn() == 15) {
-    updateClinicianOnEdit(clientId, value)
-  }
-
-  if (
+  // move row if its one of these statuses and in therapy sheet
+  } else if (
      s.getName() == "Therapy" && r.getColumn() == 1 && r.getValue() == "Referral Process Complete" ||
      s.getName() == "Therapy" && r.getColumn() == 1 && r.getValue() == "Nonresponsive" ||
      s.getName() == "Therapy" && r.getColumn() == 1 && r.getValue() == "Did Not Continue"
@@ -26,6 +26,7 @@ function atEdit(event) {
     s.getRange(row, 1, 1, numColumns).moveTo(pastTherapySheet.getRange(pastTherapyLastRow + 1, 1));
     s.deleteRow(row);
 
+  // move row if its one of these statuses and in assessment sheet
   } else if (
      s.getName() == "Assessment" && r.getColumn() == 1 && r.getValue() == "Referral Process Complete" ||
      s.getName() == "Assessment" && r.getColumn() == 1 && r.getValue() == "Nonresponsive" ||
@@ -34,6 +35,11 @@ function atEdit(event) {
     s.getRange(row, 1, 1, numColumns).moveTo(pastAssessmentSheet.getRange(pastAssessmentLastRow + 1, 1));
     s.deleteRow(row);
 
+  // make a get request to get client info needed for post request, then make post request to update client status
+  } else if (r.getColumn() == 15) {
+    updateClinicianOnEdit(clientId, value)
+
+  // if they get waitlisted, update the tasks
   } else if (s.getName() == "Therapy" && r.getColumn() == 1 && r.getValue() == "Waitlisted") {
     var row = r.getRow();
 
@@ -56,6 +62,10 @@ function atEdit(event) {
     s
       .getRange(row,getColByName('Waitlist: Reason Removed', s))
       .setValue('Incomplete');
+
+    s 
+      .getRange(row, getColByName('Progress', s))
+      .setFormula('=COUNTIF(H13:Q13, "Complete")/16');
 
   } else if (s.getName() == "Therapy" && r.getColumn() == 20 && r.getValue() == "Complete") {
     var row = r.getRow();
