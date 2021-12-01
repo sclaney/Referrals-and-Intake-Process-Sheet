@@ -1,3 +1,4 @@
+// This automatically sorts the clients by status so that the grouping always makes sense
 function autoSortRows(thisSheet) {
   var headerRows = 1;
   var sortStatus = 1; // 1 is Column "A"

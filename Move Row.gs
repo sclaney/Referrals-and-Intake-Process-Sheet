@@ -4,8 +4,6 @@ function atEdit(event) {
   var value = r.getValue();
   var row = r.getRow();
   var numColumns = s.getLastColumn();
-  // var targetSheet = ss.getSheetByName("Past Therapy");
-  // var target = targetSheet.getRange(targetSheet.getLastRow() + 1, 1);
   var clientId = s.getRange(row, 3).getValue();
 
   // update the client's status on their intakeq profile if it's edited on the sheet
@@ -41,6 +39,12 @@ function atEdit(event) {
 
   // if they get waitlisted, update the tasks
   } else if (s.getName() == "Therapy" && r.getColumn() == 1 && r.getValue() == "Waitlisted") {
+
+    // do the sorting and status updating before the task updating because the task updating takes a little while
+    updateStatusOnEdit(clientId, value);
+    autoSortRows(s);
+
+    // grab the row and update the waitlist tasks 
     var row = r.getRow();
 
     s
