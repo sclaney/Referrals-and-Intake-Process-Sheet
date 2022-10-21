@@ -1,1 +1,2 @@
-# Referrals-and-Intake-Process-Sheet
+# Referrals and Intake Process Sheet
+This is increadibly out of date and the extension I was using to sync code from Google Apps Script to GitHub is now broken. But this project serves to reach the IntakeQ API and get client data out of that Electronic Health Record and put it in a Google Spreadhseet that serves as both a CRM and a waitlist, which are both features IntakeQ lacks. The spreadsheet will move clients to different tabs depending on their journey status, and even send crucial data, like referral source, back to the clients IntakeQ profile via the API. This is currently set to run once every night automatically. The spreadhseet itself is full of confidential client data, so I will not be adding a screenshot of it.
